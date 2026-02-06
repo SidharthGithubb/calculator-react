@@ -1,30 +1,24 @@
 import styles from "./App.module.css";
 import ButtonsContainer from "./components/ButtonsContainer";
 import Display from "./components/Display";
+import { useState } from "react";
 function App() {
-  const buttons = [
-    "C",
-    "1",
-    "2",
-    "+",
-    "3",
-    "4",
-    "-",
-    "5",
-    "6",
-    "*",
-    "7",
-    "8",
-    "/",
-    "9",
-    "0",
-    ".",
-    "=",
-  ];
+  const [displayValue, setDisplayValue] = useState("");
+
+  const handleButtonClick = (button, event) => {
+    if (button === "C") {
+      setDisplayValue("");
+    } else if (button === "=") {
+      const result = eval(displayValue);
+      setDisplayValue(result);
+    } else {
+      setDisplayValue((prevValue) => prevValue + button);
+    }
+  };
   return (
     <div className={styles.calculator}>
-      <Display />
-      <ButtonsContainer buttons={buttons} />
+      <Display value={displayValue} />
+      <ButtonsContainer onButtonClick={handleButtonClick} />
     </div>
   );
 }
